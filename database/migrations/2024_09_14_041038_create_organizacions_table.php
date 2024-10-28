@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('organizacions', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('password');
             $table->string('ubicacion');
             $table->integer('miembros');
             $table->string('rrss');
@@ -22,9 +21,7 @@ return new class extends Migration
             $table->boolean('reciclan');
             $table->boolean('capacitarse');
             $table->string('asociacion');
-            $table->string('representante_nombre');
-            $table->integer('representante_telefono');
-            $table->string('representante_correo');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class tipoResiduo extends Model
+class Role extends Model
 {
     use HasFactory;
 
-    public function restaurantes()
+    public function users()
     {
-        return $this->belongsToMany(Restaurante::class, 'restaurante_tipo_residuos');
+        return $this->hasMany(User::class);
     }
+    
 }

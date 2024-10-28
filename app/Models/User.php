@@ -19,6 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role_id',
         'password',
     ];
 
@@ -37,6 +38,27 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role->name === 'administrador';
+    }
+
+    public function restaurantes()
+    {
+        return $this->hasOne(Restaurante::class);
+    }
+
+    public function organizacion()
+    {
+        return $this->hasOne(Organizacion::class);
+    }
+
     protected function casts(): array
     {
         return [

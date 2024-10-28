@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class OrganizacionController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('organizacion.index');
+        return view('admin/index');
     }
 
     /**
@@ -19,7 +19,7 @@ class OrganizacionController extends Controller
      */
     public function create()
     {
-        return view('organizacion.create');
+        //
     }
 
     /**
