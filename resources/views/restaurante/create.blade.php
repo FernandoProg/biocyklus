@@ -52,6 +52,9 @@
                             <label for="ubicacion" class="block text-sm font-medium text-gray-700">Ubicación</label>
                             <input type="text" id="search" placeholder="Buscar dirección" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             <input type="hidden" name="ubicacion" id="ubicacion" required />
+                            <input type="hidden" name="negocio" id="negocio" value="Restaurante" required />
+                            <input type="hidden" name="amount" id="amount" value="19990" required />
+                            <input type="hidden" name="session_id" value="{{ Auth::user()->id }}">
                             <div id="map" class="h-64 mt-2"></div>
                             @error('ubicacion')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>

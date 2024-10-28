@@ -18,8 +18,8 @@ Route::resource('restaurantes', RestauranteController::class);
 
 Route::get('/organizacion', [OrganizacionController::class, 'create'])->name('organizacion.create');
 
-Route::post('/payment', [PaymentController::class, 'createPayment'])->name('payment.create');
-Route::get('/payment/confirm', [PaymentController::class, 'confirmPayment'])->name('payment.confirm');
+Route::post('/payment', [PaymentController::class, 'createdTransaction'])->name('payment.create');
+Route::any('/payment/confirm', [PaymentController::class, 'commitTransaction'])->name('payment.commit');
 
 
 Route::get('/nosotros', function () {
