@@ -15,8 +15,7 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('restaurantes', RestauranteController::class);
-
-Route::get('/organizacion', [OrganizacionController::class, 'create'])->name('organizacion.create');
+Route::resource('organizacion', OrganizacionController::class);
 
 Route::post('/payment', [PaymentController::class, 'createdTransaction'])->name('payment.create');
 Route::any('/payment/confirm', [PaymentController::class, 'commitTransaction'])->name('payment.commit');

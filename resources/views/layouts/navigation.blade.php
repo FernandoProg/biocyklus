@@ -17,9 +17,14 @@
                         {{ __('Panel de control') }}
                     </x-nav-link>
                     @if(auth()->user()->restaurantes())
-                        <!-- Botón para ir a la lista de restaurantes -->
                         <x-nav-link :href="route('restaurantes.index')" :active="request()->routeIs('restaurantes.index')">
                             {{ __('Restaurante') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if(auth()->user()->organizacion())
+                        <x-nav-link :href="route('organizacion.index')" :active="request()->routeIs('organizacion.index')">
+                            {{ __('Organizacion') }}
                         </x-nav-link>
                     @endif
                 </div>

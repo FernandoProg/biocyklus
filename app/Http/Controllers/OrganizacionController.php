@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Organizacion;
+use App\Models\TipoReciclaje;
 
 class OrganizacionController extends Controller
 {
@@ -19,7 +21,8 @@ class OrganizacionController extends Controller
      */
     public function create()
     {
-        return view('organizacion.create');
+        $tiposReciclaje = TipoReciclaje::all();
+        return view('organizacion.create', compact('tiposReciclaje'));
     }
 
     /**
@@ -27,7 +30,35 @@ class OrganizacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'ubicacion' => 'required|string',
+            'miembros' => 'required|integer',
+            'rrss' => 'nullable|string',
+            'compostan' => 'required|boolean',
+            'reciclan' => 'required|boolean',
+            'capacitarse' => 'required|boolean',
+            'asociacion' => 'required|string|in:agrupacion de hecho,asociacion,corporacion,fundacion,organizacion comunitaria,pyme o empresa,otro',
+        ]);
+    
+        $organizacion = Organizacion::create([
+            'nombre' => $validated['nombre'],
+            'ubicacion' => $validated['ubicacion'],
+            'miembros' => $validated['miembros'],
+            'rrss' => $validated['rrss'] ?? null,
+            'compostan' => $validated['compostan'],
+            'reciclan' => $validated['reciclan'],
+            'capacitarse' => $validated['capacitarse'],
+            'asociacion' => $validated['asociacion'],
+            'user_id' => auth()->id(),
+        ]);
+    
+        // Guardar tipoReciclaje si reciclan es true
+        if ($request->reciclan && $request->has('tipo_reciclaje')) {
+            $organizacion->tiposReciclaje()->attach($request->tipo_reciclaje);
+        }
+    
+        return redirect()->route('organizacion.index');
     }
 
     /**
