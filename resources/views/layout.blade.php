@@ -9,7 +9,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-        <link rel="icon" href="{{ asset('storage/images/static/logo.jpg') }}">
+        <link rel="icon" href="{{ asset('storage/images/static/logo-biocyklus.png') }}">
 
         <!-- Styles -->
         <style>
@@ -34,9 +34,9 @@
 
     </head>
     <body>
-        <nav class="navbar bg-success p-3">
+        <nav class="navbar bg-success px-3">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><img src="{{ asset('storage/images/static/logo.jpg') }}" class="img-fluid" alt="description of myimage" width="150" height="150"></a>
+                <a class="navbar-brand" href="/"><img src="{{ asset('storage/images/static/logo-biocyklus.png') }}" class="img-fluid" alt="description of myimage" width="150" height="150"></a>
                 <div class="d-flex">
                     <div class="row">
                         <div class="col-lg-12">
@@ -44,8 +44,7 @@
                             <a class="btn btn-success mx-1 fs-5" href="/contacto" role="button">Contactos</a>
                             <a class="btn btn-success mx-1 fs-5" href="/terminos" role="button">Términos y condiciones</a>
                             @if (auth()->check() && auth()->user()->isAdmin())
-                                <!-- Mostrar enlaces o secciones solo para administradores -->
-                                <a href="{{ route('administrador') }}">Panel de Administración</a>
+                                <a class="btn btn-success mx-1 fs-5" href="{{ route('administrador') }}" role="button">Panel de Administración</a>
                             @endif
                         </div>
                     </div>

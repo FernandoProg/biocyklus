@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="font-semibold text-lg">Información de la Organización</h3>
-                    <form method="POST" action="{{ route('organizacion.store') }}">
+                    <form method="POST" action="{{ route('payment.create') }}">
                         @csrf
 
                         <!-- Nombre -->
@@ -27,6 +27,9 @@
                             <label for="ubicacion" class="block text-sm font-medium text-gray-700">Ubicación</label>
                             <input type="text" id="search" placeholder="Buscar dirección" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             <input type="hidden" name="ubicacion" id="ubicacion" required />
+                            <input type="hidden" name="negocio" id="negocio" value="Organizacion" required />
+                            <input type="hidden" name="amount" id="amount" value="9990" required />
+                            <input type="hidden" name="session_id" value="{{ Auth::user()->id }}">
                             <div id="map" class="h-64 mt-2"></div>
                             @error('ubicacion')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -96,7 +99,7 @@
                         <!-- Botón de Envío -->
                         <div class="flex items-center justify-end">
                             <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                {{ __('Registrar Organización') }}
+                                {{ __('Proceder al pago') }}
                             </button>
                         </div>
                     </form>

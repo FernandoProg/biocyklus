@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Transbank\Webpay\WebpayPlus;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use App\Models\Restaurante;
+use App\Models\Organizacion;
 use Redirect;
 
 class PaymentController extends Controller
@@ -25,18 +26,38 @@ class PaymentController extends Controller
         $request->request->add(['buyOrder' => uniqid()]);
         $req = $request->except('_token');
         $resp = (new Transaction)->create($req["buyOrder"], $req["session_id"], $req["amount"], route('payment.commit'));
-
-        session([
-            'restaurant_data' => [
-                'nombre' => $req['nombre'],
-                'rubro' => $req['rubro'],
-                'telefono' => $req['telefono'],
-                'ubicacion' => $req['ubicacion'],
-                'gestion' => $req['gestion'],
-                'tipo_residuos' => $req['tipo_residuos'],
-            ]
-        ]);
-
+        $tipoReciclaje = $request->input('tipo_reciclaje', []);
+        $compostan = $request->has('compostan');
+        $reciclan = $request->has('reciclan');
+        $capacitarse = $request->has('capacitarse');
+        if($request['negocio'] == 'Organizacion'){
+            session([
+                'data' => [
+                    'nombre' => $req['nombre'],
+                    'ubicacion' => $req['ubicacion'],
+                    'miembros' => $req['miembros'],
+                    'rrss' => $req['rrss'],
+                    'asociacion' => $req['asociacion'],
+                    'compostan' => $compostan,
+                    'reciclan' => $reciclan,
+                    'capacitarse' => $capacitarse,
+                    'negocio' => $req['negocio'],
+                    'tipoReciclaje' => $tipoReciclaje,
+                ]
+            ]);
+        }else{
+            session([
+                'data' => [
+                    'nombre' => $req['nombre'],
+                    'rubro' => $req['rubro'],
+                    'telefono' => $req['telefono'],
+                    'ubicacion' => $req['ubicacion'],
+                    'gestion' => $req['gestion'],
+                    'tipo_residuos' => $req['tipo_residuos'],
+                    'negocio' => $req['negocio'],
+                ]
+            ]);
+        }
         return view('payment/created', [ "params" => $req,"response" => $resp]);
     }
 
@@ -46,22 +67,40 @@ class PaymentController extends Controller
         if($request->exists("token_ws")){
             $req = $request->except('_token');
             $resp = (new Transaction)->commit($req["token_ws"]);
-            $restaurantData = session('restaurant_data');
-            // return response()->json($resp->sessionId);
+            $data = session('data');
             if ($resp->isApproved()) {
-                
-                $restaurante = \App\Models\Restaurante::create([
-                    'nombre' => $restaurantData['nombre'],
-                    'rubro' => $restaurantData['rubro'],
-                    'telefono' => $restaurantData['telefono'],
-                    'ubicacion' => $restaurantData['ubicacion'],
-                    'gestion' => $restaurantData['gestion'],
-                    'user_id' => $resp->sessionId,
-                ]);
-                $restaurante->tiposResiduos()->sync($restaurantData['tipo_residuos']);
-                session()->forget('restaurant_data');
-                return redirect()->route('restaurantes.index')
-                     ->with('success', 'Restaurante registrado exitosamente');
+                if($data['negocio'] == 'Restaurante'){
+                    $restaurante = \App\Models\Restaurante::create([
+                        'nombre' => $data['nombre'],
+                        'rubro' => $data['rubro'],
+                        'telefono' => $data['telefono'],
+                        'ubicacion' => $data['ubicacion'],
+                        'gestion' => $data['gestion'],
+                        'user_id' => $resp->sessionId,
+                    ]);
+                    $restaurante->tiposResiduos()->sync($data['tipo_residuos']);
+                    session()->forget('data');
+                    return redirect()->route('restaurantes.index')
+                         ->with('success', 'Restaurante registrado exitosamente');
+                }else{
+                    $organizacion = \App\Models\Organizacion::create([
+                        'nombre' => $data['nombre'],
+                        'ubicacion' => $data['ubicacion'],
+                        'miembros' => $data['miembros'],
+                        'rrss' => $data['rrss'],
+                        'asociacion' => $data['asociacion'],
+                        'compostan' => $data['compostan'],
+                        'reciclan' => $data['reciclan'],
+                        'capacitarse' => $data['capacitarse'],
+                        'user_id' => $resp->sessionId,
+                    ]);
+                    if (isset($data['tipoReciclaje']) && !empty($data['tipoReciclaje'])) {
+                        $organizacion->tiposReciclajes()->sync($data['tipoReciclaje']);
+                    }
+                    session()->forget('data');
+                    return redirect()->route('organizacion.index')
+                         ->with('success', 'Organizacion registrado exitosamente');
+                }
             }
 
             return redirect()->route('dashboard');

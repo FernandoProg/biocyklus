@@ -25,14 +25,14 @@
                             <label for="rubro" class="block text-sm font-medium text-gray-700">Rubro</label>
                             <select name="rubro" id="rubro" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <option value="">Seleccione un rubro</option>
-                                <option value="lacteos" {{ $restaurante->rubro == 'lacteos' ? 'selected' : '' }}>Lácteos</option>
-                                <option value="comida rapida" {{ $restaurante->rubro == 'comida rapida' ? 'selected' : '' }}>Comida Rápida</option>
-                                <option value="restauracion" {{ $restaurante->rubro == 'restauracion' ? 'selected' : '' }}>Restauración</option>
                                 <option value="alimentacion institucional" {{ $restaurante->rubro == 'alimentacion institucional' ? 'selected' : '' }}>Alimentación Institucional</option>
-                                <option value="panificadora" {{ $restaurante->rubro == 'panificadora' ? 'selected' : '' }}>Panificadora</option>
-                                <option value="carnica" {{ $restaurante->rubro == 'carnica' ? 'selected' : '' }}>Cárnica</option>
-                                <option value="pesquera" {{ $restaurante->rubro == 'pesquera' ? 'selected' : '' }}>Pesquera</option>
                                 <option value="bebidas" {{ $restaurante->rubro == 'bebidas' ? 'selected' : '' }}>Bebidas</option>
+                                <option value="carnica" {{ $restaurante->rubro == 'carnica' ? 'selected' : '' }}>Cárnica</option>
+                                <option value="comida rapida" {{ $restaurante->rubro == 'comida rapida' ? 'selected' : '' }}>Comida Rápida</option>
+                                <option value="lacteos" {{ $restaurante->rubro == 'lacteos' ? 'selected' : '' }}>Lácteos</option>
+                                <option value="panificadora" {{ $restaurante->rubro == 'panificadora' ? 'selected' : '' }}>Panificadora</option>
+                                <option value="pesquera" {{ $restaurante->rubro == 'pesquera' ? 'selected' : '' }}>Pesquera</option>
+                                <option value="restauracion" {{ $restaurante->rubro == 'restauracion' ? 'selected' : '' }}>Restauración</option>
                                 <option value="otro" {{ $restaurante->rubro == 'otro' ? 'selected' : '' }}>Otro</option>
                             </select>
                         </div>
@@ -46,14 +46,14 @@
                             <label for="gestion" class="block text-sm font-medium text-gray-700">Gestión</label>
                             <select name="gestion" id="gestion" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <option value="">Seleccione un tipo de gestión</option>
-                                <option value="BPM" {{ $restaurante->gestion == 'BPM' ? 'selected' : '' }}>BPM</option>
-                                <option value="HACCP" {{ $restaurante->gestion == 'HACCP' ? 'selected' : '' }}>HACCP</option>
-                                <option value="ISO" {{ $restaurante->gestion == 'ISO' ? 'selected' : '' }}>ISO</option>
-                                <option value="BRC" {{ $restaurante->gestion == 'BRC' ? 'selected' : '' }}>BRC</option>
-                                <option value="IFS food" {{ $restaurante->gestion == 'IFS food' ? 'selected' : '' }}>IFS food</option>
                                 <option value="BPA" {{ $restaurante->gestion == 'BPA' ? 'selected' : '' }}>BPA</option>
-                                <option value="FSSC" {{ $restaurante->gestion == 'FSSC' ? 'selected' : '' }}>FSSC</option>
+                                <option value="BPM" {{ $restaurante->gestion == 'BPM' ? 'selected' : '' }}>BPM</option>
+                                <option value="BRC" {{ $restaurante->gestion == 'BRC' ? 'selected' : '' }}>BRC</option>
                                 <option value="FSA" {{ $restaurante->gestion == 'FSA' ? 'selected' : '' }}>FSA</option>
+                                <option value="FSSC" {{ $restaurante->gestion == 'FSSC' ? 'selected' : '' }}>FSSC</option>
+                                <option value="HACCP" {{ $restaurante->gestion == 'HACCP' ? 'selected' : '' }}>HACCP</option>
+                                <option value="IFS food" {{ $restaurante->gestion == 'IFS food' ? 'selected' : '' }}>IFS food</option>
+                                <option value="ISO" {{ $restaurante->gestion == 'ISO' ? 'selected' : '' }}>ISO</option>
                             </select>
                         </div>
 

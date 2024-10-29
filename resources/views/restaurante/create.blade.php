@@ -25,14 +25,14 @@
                             <label for="rubro" class="block text-sm font-medium text-gray-700">Rubro</label>
                             <select name="rubro" id="rubro" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <option value="">Seleccione un rubro</option>
-                                <option value="lacteos">Lácteos</option>
-                                <option value="comida rapida">Comida Rápida</option>
-                                <option value="restauracion">Restauración</option>
                                 <option value="alimentacion institucional">Alimentación Institucional</option>
-                                <option value="panificadora">Panificadora</option>
-                                <option value="carnica">Cárnica</option>
-                                <option value="pesquera">Pesquera</option>
                                 <option value="bebidas">Bebidas</option>
+                                <option value="carnica">Cárnica</option>
+                                <option value="comida rapida">Comida Rápida</option>
+                                <option value="lacteos">Lácteos</option>
+                                <option value="panificadora">Panificadora</option>
+                                <option value="pesquera">Pesquera</option>
+                                <option value="restauracion">Restauración</option>
                                 <option value="otro">Otro</option>
                             </select>
                             @error('rubro')
@@ -53,7 +53,7 @@
                             <input type="text" id="search" placeholder="Buscar dirección" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             <input type="hidden" name="ubicacion" id="ubicacion" required />
                             <input type="hidden" name="negocio" id="negocio" value="Restaurante" required />
-                            <input type="hidden" name="amount" id="amount" value="19990" required />
+                            <input type="hidden" name="amount" id="amount" value="39990" required />
                             <input type="hidden" name="session_id" value="{{ Auth::user()->id }}">
                             <div id="map" class="h-64 mt-2"></div>
                             @error('ubicacion')
@@ -65,14 +65,14 @@
                             <label for="gestion" class="block text-sm font-medium text-gray-700">Gestión</label>
                             <select name="gestion" id="gestion" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <option value="">Seleccione un tipo de gestión</option>
-                                <option value="BPM">BPM</option>
-                                <option value="HACCP">HACCP</option>
-                                <option value="ISO">ISO</option>
-                                <option value="BRC">BRC</option>
-                                <option value="IFS food">IFS food</option>
                                 <option value="BPA">BPA</option>
-                                <option value="FSSC">FSSC</option>
+                                <option value="BPM">BPM</option>
+                                <option value="BRC">BRC</option>
                                 <option value="FSA">FSA</option>
+                                <option value="FSSC">FSSC</option>
+                                <option value="HACCP">HACCP</option>
+                                <option value="IFS food">IFS food</option>
+                                <option value="ISO">ISO</option>
                             </select>
                             @error('gestion')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>

@@ -13,24 +13,43 @@ class DashboardController extends Controller
     $direccionRestaurante = null;
     
     if ($user->restaurantes) {
-        $ubicacion = $user->restaurantes->ubicacion; // Latitud, longitud como 'lat,long'
-        list($lat, $lng) = explode(',', $ubicacion);
+        $ubicacionRest = $user->restaurantes->ubicacion; // Latitud, longitud como 'lat,long'
+        list($lat, $lng) = explode(',', $ubicacionRest);
 
         // Llamar a la API de Nominatim
-        $response = Http::get('https://nominatim.openstreetmap.org/reverse', [
+        $responseRest = Http::get('https://nominatim.openstreetmap.org/reverse', [
             'lat' => $lat,
             'lon' => $lng,
             'format' => 'json',
         ]);
 
-        if ($response->successful()) {
-            $direccionRestaurante = $response->json()['display_name'];
+        if ($responseRest->successful()) {
+            $direccionRestaurante = $responseRest->json()['display_name'];
+        }
+    }
+
+    $direccionOrganizacion = null;
+    
+    if ($user->organizacion) {
+        $ubicacionOrg = $user->organizacion->ubicacion; // Latitud, longitud como 'lat,long'
+        list($lat, $lng) = explode(',', $ubicacionOrg);
+
+        // Llamar a la API de Nominatim
+        $responseOrg = Http::get('https://nominatim.openstreetmap.org/reverse', [
+            'lat' => $lat,
+            'lon' => $lng,
+            'format' => 'json',
+        ]);
+
+        if ($responseOrg->successful()) {
+            $direccionOrganizacion = $responseOrg->json()['display_name'];
         }
     }
 
     return view('dashboard', [
         'user' => $user,
         'direccionRestaurante' => $direccionRestaurante,
+        'direccionOrganizacion' => $direccionOrganizacion,
     ]);
 }
 }
