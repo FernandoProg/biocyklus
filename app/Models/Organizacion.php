@@ -9,8 +9,25 @@ class Organizacion extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nombre',
+        'ubicacion',
+        'miembros',
+        'rrss',
+        'compostan',
+        'reciclan',
+        'capacitarse',
+        'asociacion',
+        'user_id'
+    ];
+
     public function tiposReciclajes()
     {
-        return $this->belongsToMany(tipoReciclaje::class, 'restaurante_tipo_reciclajes');
+        return $this->belongsToMany(tipoReciclaje::class, 'organizacion_tipo_reciclajes');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
