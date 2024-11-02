@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('fNacimiento');
             $table->string('cargo');
             $table->unsignedBigInteger('id_restaurante');
-            $table->foreign('id_restaurante')->references('id')->on('restaurantes')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('restaurante_id')->references('id')->on('restaurantes')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

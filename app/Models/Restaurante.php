@@ -17,4 +17,8 @@ class Restaurante extends Model
     {
         return $this->belongsToMany(tipoResiduo::class, 'restaurante_tipo_residuos');
     }
+
+    public function empleados() {
+        return $this->hasMany(Empleado::class);
+    }
 }

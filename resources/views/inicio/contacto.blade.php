@@ -8,7 +8,7 @@
                 <p class="text-muted">Nos encantaría saber de ti. Ya sea que tengas preguntas sobre nuestros productos, sugerencias, o quieras saber más sobre nuestra misión en Biocyklus, estamos aquí para ayudarte.</p>
                 
                 <h4>Dirección</h4>
-                <p>Biocyklus Ltda.<br>
+                <p>Biocyklus SpA.<br>
                 Av. Alonso de Ribera 2850<br>
                 Concepción, Bío Bío</p>
 

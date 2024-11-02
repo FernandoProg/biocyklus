@@ -34,7 +34,8 @@ class RestauranteController extends Controller
             }
         }
         $tiposResiduos = $restaurante ? $restaurante->tiposResiduos : [];
-        return view('restaurante.index', compact('restaurante', 'direccionRestaurante', 'tiposResiduos'));
+        $empleados = $restaurante->empleados;
+        return view('restaurante.index', compact('restaurante', 'direccionRestaurante', 'tiposResiduos', 'empleados'));
     }
 
     /**

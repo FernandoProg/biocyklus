@@ -41,7 +41,7 @@
             <div class="card-body text-center">
                 <h5 class="card-title">Fernando Antonio Cabezas Herrera</h5>
                 <p class="card-text">Ingeniero Civil Informático</p>
-                <p class="card-text"><small class="text-body-secondary">fcabezas@ing.ucsc.cl</small></p>
+                <p class="card-text"><small class="text-body-secondary">fernandoach2025@gmail.com</small></p>
             </div>
         </div>
     </div>

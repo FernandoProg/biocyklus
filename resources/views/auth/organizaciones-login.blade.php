@@ -3,9 +3,9 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class="flex justify-between mb-6">
-        <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-gray-900 {{ request()->is('login') ? 'font-bold' : '' }}">Ingreso Usuario</a>
-        <a href="{{ route('empleados.login') }}" class="text-sm text-gray-600 hover:text-gray-900 {{ request()->is('empleados.login') ? 'font-bold' : '' }}">Ingreso Empleado</a>
-        <a href="{{ route('organizaciones.login') }}" class="text-sm text-gray-600 hover:text-gray-900 {{ request()->is('organizaciones.login') ? 'font-bold' : '' }}">Ingreso Participante</a>
+        <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-gray-900">Ingreso Usuario</a>
+        <a href="{{ route('empleados.login') }}" class="text-sm text-gray-600 hover:text-gray-900">Ingreso Empleado</a>
+        <a href="{{ route('organizaciones.login') }}" class="text-sm text-gray-600 hover:text-gray-900 font-bold">Ingreso Participante</a>
     </div>
 
     <form method="POST" action="{{ route('login') }}">

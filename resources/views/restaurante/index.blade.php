@@ -12,7 +12,7 @@
                 <div class="p-6 text-gray-900">
 
                     @if($restaurante)
-                        <table class="min-w-full divide-y divide-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200 mb-6">
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
@@ -39,7 +39,7 @@
                                         @else
                                             <ul>
                                                 @foreach($tiposResiduos as $tipo)
-                                                    <li>{{ $tipo->nombre }}</li> <!-- Asegúrate de que 'nombre' sea el atributo correcto -->
+                                                    <li>{{ $tipo->nombre }}</li>
                                                 @endforeach
                                             </ul>
                                         @endif
@@ -57,6 +57,51 @@
                                         </form>
                                     </td>
                                 </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Sección de Empleados y Botón Agregar Empleado -->
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-lg">Empleados</h3>
+                            <a href="{{ route('empleados.create', ['restaurante_id' => $restaurante->id]) }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                                Agregar Empleado
+                            </a>
+                        </div>
+
+                        <!-- Tabla de Empleados -->
+                        <table class="min-w-full divide-y divide-gray-200 mb-6">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cargo</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse($empleados as $empleado)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $empleado->name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $empleado->cargo }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $empleado->email }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <a href="{{ route('empleados.edit', $empleado->id) }}" class="text-blue-500 hover:text-blue-700">
+                                                <i class="bi bi-pencil-fill"></i>
+                                            </a>
+                                            <form action="{{ route('empleados.destroy', $empleado->id) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-blue-500 hover:text-blue-700" onclick="return confirm('¿Estás seguro de que quieres eliminar este empleado?');">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="px-6 py-4 text-center text-gray-500">No hay empleados asociados.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     @else
