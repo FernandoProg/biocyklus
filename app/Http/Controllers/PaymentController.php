@@ -76,8 +76,8 @@ class PaymentController extends Controller
                         'telefono' => $data['telefono'],
                         'ubicacion' => $data['ubicacion'],
                         'gestion' => $data['gestion'],
-                        'user_id' => $resp->sessionId,
                     ]);
+                    $restaurante->users()->attach($resp->sessionId);
                     $restaurante->tiposResiduos()->sync($data['tipo_residuos']);
                     session()->forget('data');
                     return redirect()->route('restaurantes.index')
@@ -92,8 +92,8 @@ class PaymentController extends Controller
                         'compostan' => $data['compostan'],
                         'reciclan' => $data['reciclan'],
                         'capacitarse' => $data['capacitarse'],
-                        'user_id' => $resp->sessionId,
                     ]);
+                    $organizacion->users()->attach($resp->sessionId);
                     if (isset($data['tipoReciclaje']) && !empty($data['tipoReciclaje'])) {
                         $organizacion->tiposReciclajes()->sync($data['tipoReciclaje']);
                     }

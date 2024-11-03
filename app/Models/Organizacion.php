@@ -26,8 +26,16 @@ class Organizacion extends Model
         return $this->belongsToMany(tipoReciclaje::class, 'organizacion_tipo_reciclajes');
     }
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'organizacion_user');
+    }
+
+    public function participantes()
+    {
+        return $this->belongsToMany(User::class, 'organizacion_user')
+                ->whereHas('roles', function($query) {
+                    $query->where('name', 'participante');
+                });
     }
 }

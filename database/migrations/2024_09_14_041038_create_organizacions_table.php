@@ -21,7 +21,6 @@ return new class extends Migration
             $table->boolean('reciclan');
             $table->boolean('capacitarse');
             $table->string('asociacion');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

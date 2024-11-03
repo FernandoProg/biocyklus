@@ -43,7 +43,7 @@
                             <a class="btn btn-success mx-1 fs-5" href="/nosotros" role="button">Sobre Nosotros</a>
                             <a class="btn btn-success mx-1 fs-5" href="/contacto" role="button">Contactos</a>
                             <a class="btn btn-success mx-1 fs-5" href="/terminos" role="button">Términos y condiciones</a>
-                            @if (auth()->check() && auth()->user()->isAdmin())
+                            @if (auth()->check() && auth()->user()->hasRole('administrador'))
                                 <a class="btn btn-success mx-1 fs-5" href="{{ route('administrador') }}" role="button">Panel de Administración</a>
                             @endif
                         </div>

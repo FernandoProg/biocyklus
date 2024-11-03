@@ -59,6 +59,38 @@
                                 </tr>
                             </tbody>
                         </table>
+
+                        <!-- Sección de Empleados y Botón Agregar Empleado -->
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-lg">Empleados</h3>
+                            <a href="{{ route('organizacion.createParticipant') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                                Agregar Participante
+                            </a>
+                        </div>
+
+                        <!-- Tabla de Participantes -->
+                        <table class="min-w-full divide-y divide-gray-200 mb-6">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cargo</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse($participantes as $participante)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $participante->name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $participante->cargo }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $participante->email }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="px-6 py-4 text-center text-gray-500">No hay participantes asociados.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     @else
                         <p>No tienes una organización asociada.</p>
                         <a href="{{ route('organizacion.create') }}" class="text-blue-500">Crear Organización</a>

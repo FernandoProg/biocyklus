@@ -7,6 +7,7 @@ use App\Models\Organizacion;
 use App\Models\TipoReciclaje;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use App\Models\User;
 
 class OrganizacionController extends Controller
 {
@@ -16,11 +17,11 @@ class OrganizacionController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $organizacion = Auth::user()->organizacion()->first(); 
+        $organizacion = Auth::user()->organizaciones()->first(); 
         $direccionOrganizacion = 'No disponible';
         $tiposReciclaje = $organizacion ? $organizacion->tiposReciclajes : collect();
-        if ($user->organizacion) {
-            $ubicacion = $user->organizacion->ubicacion; // Latitud, longitud como 'lat,long'
+        if ($organizacion) {
+            $ubicacion = $organizacion->ubicacion; // Latitud, longitud como 'lat,long'
             list($lat, $lng) = explode(',', $ubicacion);
 
             // Llamar a la API de Nominatim
@@ -32,8 +33,11 @@ class OrganizacionController extends Controller
             if ($response->successful()) {
                 $direccionOrganizacion = $response->json()['display_name'];
             }
+            $participantes = $organizacion->participantes;
+        }else{
+            $participantes = [];
         }
-        return view('organizacion.index', compact('organizacion', 'tiposReciclaje', 'direccionOrganizacion'));
+        return view('organizacion.index', compact('organizacion', 'tiposReciclaje', 'direccionOrganizacion', 'participantes'));
     }
 
     /**
@@ -67,7 +71,6 @@ class OrganizacionController extends Controller
             'reciclan' => $request->has('reciclan'),
             'capacitarse' => $request->has('capacitarse'),
             'asociacion' => $request->asociacion,
-            'user_id' => auth()->id(),
         ]);
     
         // Guardar tipoReciclaje si reciclan es true
@@ -147,5 +150,34 @@ class OrganizacionController extends Controller
         $organizacion = Organizacion::findOrFail($id);
         $organizacion->delete();
         return redirect()->route('organizacion.index')->with('success', 'Organizacion eliminada exitosamente.');
+    }
+
+    public function createParticipant()
+    {
+        return view('organizacion.createParticipant');
+    }
+
+    public function storeParticipant(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+            'cargo' => ['required', 'string'],
+            'role' => ['required', 'string'],
+        ]);
+        $user = User::where('name', $request->name)->where('email', $request->email)->first();
+        if ($user) {
+            if (!$user->hasRole($request->role)) {
+                $user->assignRole($request->role);
+                $user->removeRole('usuario');
+            }
+            $user->cargo = $request->cargo;
+            $user->save();
+            $user->organizaciones()->attach(Auth::user()->organizaciones()->first()->id);
+    
+            return redirect()->route('organizacion.index')->with('success', 'Partipante enlazado exitosamente.');
+        } else {
+            return redirect()->back()->withErrors(['email' => 'Usuario no encontrado.']);
+        }
     }
 }

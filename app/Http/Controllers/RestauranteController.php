@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TipoResiduo;
 use App\Models\Restaurante;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
@@ -19,8 +20,8 @@ class RestauranteController extends Controller
         $direccionRestaurante = 'No disponible';
         $restaurante = Auth::user()->restaurantes()->first(); 
         
-        if ($user->restaurantes) {
-            $ubicacion = $user->restaurantes->ubicacion; // Latitud, longitud como 'lat,long'
+        if ($restaurante) {
+            $ubicacion = $restaurante->ubicacion; // Latitud, longitud como 'lat,long'
             list($lat, $lng) = explode(',', $ubicacion);
 
             // Llamar a la API de Nominatim
@@ -32,9 +33,12 @@ class RestauranteController extends Controller
             if ($response->successful()) {
                 $direccionRestaurante = $response->json()['display_name'];
             }
+            $empleados = $restaurante->empleados;
+        }else{
+            $empleados = [];
         }
         $tiposResiduos = $restaurante ? $restaurante->tiposResiduos : [];
-        $empleados = $restaurante->empleados;
+        
         return view('restaurante.index', compact('restaurante', 'direccionRestaurante', 'tiposResiduos', 'empleados'));
     }
 
@@ -70,8 +74,9 @@ class RestauranteController extends Controller
         $restaurante->telefono = $request->telefono;
         $restaurante->ubicacion = $request->ubicacion;
         $restaurante->gestion = $request->gestion;
-        $restaurante->user_id = Auth::id();
         $restaurante->save();
+
+        $restaurante->users()->attach(Auth::id());
 
         // Adjuntar los tipos de residuos seleccionados al restaurante
         $restaurante->tiposResiduos()->attach($request->tipo_residuos);
@@ -132,5 +137,34 @@ class RestauranteController extends Controller
 
         // Redirigir a la vista con un mensaje de éxito
         return redirect()->route('restaurantes.index')->with('success', 'Restaurante eliminado exitosamente.');
+    }
+
+    public function createEmployee()
+    {
+        return view('restaurante.createEmployee');
+    }
+
+    public function storeEmployee(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+            'cargo' => ['required', 'string'],
+            'role' => ['required', 'string'],
+        ]);
+        $user = User::where('name', $request->name)->where('email', $request->email)->first();
+        if ($user) {
+            if (!$user->hasRole($request->role)) {
+                $user->assignRole($request->role);
+                $user->removeRole('usuario');
+            }
+            $user->cargo = $request->cargo;
+            $user->save();
+            $user->restaurantes()->attach(Auth::user()->restaurantes()->first()->id);
+    
+            return redirect()->route('restaurantes.index')->with('success', 'Empleado enlazado exitosamente.');
+        } else {
+            return redirect()->back()->withErrors(['email' => 'Usuario no encontrado.']);
+        }
     }
 }

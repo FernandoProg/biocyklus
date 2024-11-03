@@ -7,6 +7,9 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\Models\User;
 
 class AdminSeeder extends Seeder
 {
@@ -23,7 +26,6 @@ class AdminSeeder extends Seeder
                 'password' => Hash::make(12345678),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'role_id' => 1,
             ],
             [
                 'id' => 2,
@@ -32,8 +34,15 @@ class AdminSeeder extends Seeder
                 'password' => Hash::make(12345678),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'role_id' => 2,
             ],
         ]);
+        $admin = User::firstOrCreate(
+            ['email' => 'fernandoach2025@gmail.com']
+        );
+        $admin->assignRole('administrador');
+        $user = User::firstOrCreate(
+            ['email' => 'francisca@gmail.com']
+        );
+        $user->assignRole('usuario');
     }
 }

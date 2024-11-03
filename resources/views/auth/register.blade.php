@@ -39,7 +39,7 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <input type="number" name="role_id" id="role_id" value=2 required hidden>
+        <x-text-input id="role" type="role" name="role" value="usuario" required autocomplete="usuario" hidden/>
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">

@@ -18,7 +18,16 @@ class Restaurante extends Model
         return $this->belongsToMany(tipoResiduo::class, 'restaurante_tipo_residuos');
     }
 
-    public function empleados() {
-        return $this->hasMany(Empleado::class);
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'restaurante_user');
+    }
+
+    public function empleados()
+    {
+        return $this->belongsToMany(User::class, 'restaurante_user')
+                ->whereHas('roles', function($query) {
+                    $query->where('name', 'empleado'); // Filtrar por el rol 'empleado'
+                });
     }
 }

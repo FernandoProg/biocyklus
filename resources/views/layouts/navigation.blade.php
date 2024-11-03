@@ -22,7 +22,7 @@
                         </x-nav-link>
                     @endif
 
-                    @if(auth()->user()->organizacion())
+                    @if(auth()->user()->organizaciones())
                         <x-nav-link :href="route('organizacion.index')" :active="request()->routeIs('organizacion.index')">
                             {{ __('Organizacion') }}
                         </x-nav-link>
